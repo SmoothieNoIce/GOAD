@@ -1,0 +1,108 @@
+{
+"lab" : {
+    "hosts" : {
+        "dc01" : {
+            "hostname" : "dc",
+            "type" : "dc",
+            "local_admin_password": "admin123456",
+            "domain" : "speedlab.local",
+            "path" : "DC=speedlab,DC=local",
+            "vulns" : ["files", "credentials", "enable_credssp_client", "schedule"],
+            "vulns_vars" : {
+                "credentials" : {
+                    "TERMSRV/alicesecret": {
+                        "username" : "SPEEDLAB\\alice",
+                        "secret"   : "F0llOwTheWh1teR@bit",
+                        "runas"    : "SPEEDLAB\\alice",
+                        "runas_password" : "spongebob"
+                    }
+                }
+            },
+            "mssql":{
+                "sa_password": "123456",
+                "svcaccount" : "sql_svc",
+                "sysadmins" : [
+                    "SPEEDLAB\\alice"
+                ]
+            }
+        },
+        "ws01" : {
+            "hostname" : "ws",
+            "type" : "workstation",
+            "local_admin_password": "admin123456",
+            "domain" : "speedlab.local",
+            "use_laps": false,
+            "path" : "DC=speedlab,DC=local",
+            "local_groups" : {
+                "Administrators" : [
+                    "SPEEDLAB\\wsadmin"
+                ],
+                "Remote Desktop users" : [
+                    "SPEEDLAB\\wsrdp"
+                ]
+            },
+            "vulns" : ["disable_firewall", "enable_credssp_server"]
+        }
+    },
+    "domains" : {
+        "speedlab.local" : {
+            "dc": "dc01",
+            "domain_password" : "admin123456",
+            "netbios_name": "SPEEDLAB",
+            "groups" : {
+                "global" : {
+                    "wsadmin" : {
+                        "managed_by" : "alice",
+                        "path" : "CN=Users,DC=speedlab,DC=local"
+                    },
+                    "wsrdp" : {
+                        "managed_by" : "dave",
+                        "path" : "CN=Users,DC=speedlab,DC=local"
+                    }
+                }
+            },
+            "acls" : {
+                "anonymous_rpc" : {"for": "NT AUTHORITY\\ANONYMOUS LOGON", "to": "DC=speedlab,DC=local", "right": "ReadProperty", "inheritance": "All"},
+                "anonymous_rpc2" : {"for": "NT AUTHORITY\\ANONYMOUS LOGON", "to": "DC=speedlab,DC=local", "right": "GenericExecute", "inheritance": "All"}
+            },
+            "users" : {
+                "alice" : {
+                    "firstname"   : "alice",
+                    "password"    : "123456",
+                    "groups"      : ["wsadmin", "Domain Admins"],
+                    "path"        : "CN=Users,DC=speedlab,DC=local"
+                },
+                "bob" : {
+                    "firstname"   : "bob",
+                    "password"    : "123456",
+                    "description" : "(Password : superman)",
+                    "groups"      : ["wsadmin"],
+                    "path"        : "CN=Users,DC=speedlab,DC=local"
+                },
+                "carol" : {
+                    "firstname"   : "carol",
+                    "password"    : "123456",
+                    "groups"      : ["wsadmin", "Domain Admins"],
+                    "path"        : "CN=Users,DC=speedlab,DC=local"
+                },
+                "dave" : {
+                    "firstname"   : "dave",
+                    "password"    : "c",
+                    "groups"      : ["wsrdp"],
+                    "path"        : "CN=Users,DC=speedlab,DC=local"
+                },
+                "sql_svc" : {
+                    "firstname"   : "sql",
+                    "surname"     : "service",
+                    "password"    : "123456",
+                    "city"        : "-",
+                    "description" : "sql service",
+                    "groups"      : [],
+                    "path"        : "CN=Users,DC=speedlab,DC=local",
+                    "spns"        : []
+                }
+            }
+        }
+    }
+}
+}
