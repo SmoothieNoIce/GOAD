@@ -4,7 +4,7 @@
         "dc01" : {
             "hostname" : "dc",
             "type" : "dc",
-            "local_admin_password": "admin123456",
+            "local_admin_password": "8dCT-DJjgScp",
             "domain" : "speedlab.local",
             "path" : "DC=speedlab,DC=local",
             "vulns" : ["files", "credentials", "enable_credssp_client", "schedule"],
@@ -29,7 +29,7 @@
         "ws01" : {
             "hostname" : "ws",
             "type" : "workstation",
-            "local_admin_password": "admin123456",
+            "local_admin_password": "EP+xh7Rk6j90",
             "domain" : "speedlab.local",
             "use_laps": false,
             "path" : "DC=speedlab,DC=local",
@@ -47,7 +47,7 @@
     "domains" : {
         "speedlab.local" : {
             "dc": "dc01",
-            "domain_password" : "admin123456",
+            "domain_password" : "8dCT-DJjgScp",
             "netbios_name": "SPEEDLAB",
             "groups" : {
                 "global" : {
