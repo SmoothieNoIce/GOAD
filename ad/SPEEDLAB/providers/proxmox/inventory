@@ -9,7 +9,7 @@ ws01 ansible_host=192.168.10.30 dns_domain=dc01 dict_key=ws01
 ; ------------------------------------------------
 ; Other
 ; ------------------------------------------------
-elk ansible_host=192.168.10.50 ansible_connection=ssh
+; elk ansible_host=192.168.10.50 ansible_connection=ssh
 
 [all:vars]
 ; domain_name : folder inside ad/
